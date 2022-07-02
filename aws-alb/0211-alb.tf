@@ -193,12 +193,12 @@ resource "aws_lb_listener" "https" {
   }
 }
 resource "aws_lb_listener_rule" "lb_rule" {
-  listener_arn = aws_lb_listener.https.arn
+  listener_arn = join("", aws_lb_listener.https.*.arn)
   priority     = 90
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.default.*.arn
+    target_group_arn = join("", aws_lb_target_group.default.*.arn)
   }
 
   condition {
