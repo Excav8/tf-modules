@@ -295,6 +295,8 @@ variable "security_group_enabled" {
   default     = true
 }
 variable "lb_domains" {
+  default     = false
 }
 variable "api_whitelist_path" {
+  default     = false
 }
