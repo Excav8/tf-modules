@@ -192,7 +192,26 @@ resource "aws_lb_listener" "https" {
     }
   }
 }
+resource "aws_lb_listener_rule" "lb_rule" {
+  listener_arn = aws_lb_listener.https.arn
+  priority     = 90
 
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.default.*.arn
+  }
+
+  condition {
+    host_header {
+      values = var.lb_domains
+    }
+  }
+  condition {
+    path_pattern {
+      values = var.api_whitelist_path
+    }
+  }
+}
 resource "aws_lb_listener_certificate" "https_sni" {
   count           = module.this.enabled && var.https_enabled && var.additional_certs != [] ? length(var.additional_certs) : 0
   listener_arn    = join("", aws_lb_listener.https.*.arn)
