@@ -294,3 +294,7 @@ variable "security_group_enabled" {
   description = "Enables the security group"
   default     = true
 }
+variable "lb_domains" {
+}
+variable "api_whitelist_path" {
+}
